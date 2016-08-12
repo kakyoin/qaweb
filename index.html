@@ -54,4 +54,72 @@
         <div class="pace-activity"></div>
     </div>
     <div id="lowie-main"><img src="./images/favicon.png" alt="ie tip"></div>
+    <div id="main">
+
+    </div>
+    <script type="text/javascript" src="./vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./vendors/bootstrap/js/validator.js"></script>
+    <link rel="stylesheet" type="text/css" href="vendors/fullpage/jquery.fullpage.min.css">
+    <script type="text/javascript" src="vendors/fullpage/jquery.fullpage.min.js"></script>
+    <script type="text/javascript" src="vendors/echarts/echarts.simple.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            if ($('.lower-ie').length) {
+                return;
+            }
+            document.getElementById('nav-index').className = 'active';
+            var defaultEle = $('.navbar-default');
+            defaultEle.addClass('navbar-bg');
+
+            document.writeln('<script language="javascript" src="js/index.js">');
+            document.writeln('</scr' + 'ipt>');
+
+            // enabling full page plugin
+            $(document).ready(function() {
+                // draw polyline and sine wave animation
+                drawCanvasOne();
+                drawLogo();
+                // enabling full page plugin
+                $('#fullpage').fullpage({
+                    navigation: true,
+                    resize: true,
+                    onLeave: function(index, nextIndex, direction) {
+                        if ($('.navbar-toggle').attr('aria-expanded') === 'true') {
+                            $('.navbar-toggle').trigger('click');
+                        }
+                        $('.dropdown-toggle').each(function() {
+                            var $toggleBtn = $(this);
+                            if ($toggleBtn.attr('aria-expanded') === 'true') {
+                                $toggleBtn.parent().removeClass('open');
+                                $toggleBtn.trigger('click');
+                            }
+                        });
+                        if (nextIndex === 2) {
+                            initGithubCharts();
+                        }
+                        if (nextIndex === 3) {
+                            initSizeCharts();
+                        }
+                        if (nextIndex === 4) {
+                            $('.section-four').find('.text-wrap').addClass('text-wrap-animate')
+                                .end().find('.device-wrap').addClass('device-wrap-animate');
+                        }
+                        defaultEle.toggleClass('navbar-bg', nextIndex === 1);
+                    }
+                });
+                var container = $('.container-five');
+                container.on('mouseenter', 'img', function() {
+                    var target = $(this);
+                    if (target.hasClass('cur-item')) {
+                        return;
+                    }
+                    var index = +target.data('index');
+                    container.find('.cur-item').removeClass('cur-item');
+                    target.addClass('cur-item');
+                });
+            });
+        })();
+    </script>
+    <script language="javascript" src="js/index.js">
+    </script>
 </body>
